@@ -57,6 +57,19 @@ def medals(team, year, output_file=None):
         if output_file:
             write_output(output_file, summary)
 
+def overall(countries):
+    file = "athlete_events.tsv"
+    country_medals = {country: {} for country in countries}
+    with open(file, "r", encoding='utf-8') as file:
+        header = file.readline().rstrip('\n').split('\t')
+        YEAR = header.index("Year")
+        TEAM = header.index("Team")
+        NOC = header.index("NOC")
+        MEDAL = header.index("Medal")
+
+        
+
+
 parser = argparse.ArgumentParser(description="Olympic medals")
 parser.add_argument("-medals", nargs=2, required=True, help="Country of team and year of Olympics")
 parser.add_argument("-output", help = "Name of file where summary will be saved")

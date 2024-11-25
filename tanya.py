@@ -67,12 +67,26 @@ def overall(countries):
         NOC = header.index("NOC")
         MEDAL = header.index("Medal")
 
-        
+        for line in file:
+            row = line.rstrip('\n').split('\t')
+            for country in countries:
+                if (row[TEAM] == country or row[NOC] == country) and row[MEDAL] != 'NA':
+                    year = row[YEAR]
+                    if year not in country_medals[country]:
+                        country_medals[country][year] = 0
+                    country_medals[country][year] += 1
+    for country in countries:
+        if country in country_medals[country]:
+            best_year = max(country_medals[country], key=country_medals[country].get())
+            print(f"The best year for {country} was {best_year} when {country} "
+                  f"won {country_medals[country][best_year]} medals")
 
 
 parser = argparse.ArgumentParser(description="Olympic medals")
 parser.add_argument("-medals", nargs=2, required=True, help="Country of team and year of Olympics")
 parser.add_argument("-output", help = "Name of file where summary will be saved")
+
+
 
 args = parser.parse_args()
 

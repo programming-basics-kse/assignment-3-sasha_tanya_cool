@@ -57,9 +57,8 @@ def medals(team, year, output_file=None):
         if output_file:
             write_output(output_file, summary)
 
-def overall(countries):
-    file = "athlete_events.tsv"
-    country_medals = {country: {} for country in countries}
+def overall(file, countries):
+    country_medals = {country: {'Gold': 0, 'Silver': 0, 'Bronze': 0, 'Years': {}} for country in countries}
     with open(file, "r", encoding='utf-8') as file:
         header = file.readline().rstrip('\n').split('\t')
         YEAR = header.index("Year")
@@ -73,24 +72,31 @@ def overall(countries):
                 if (row[TEAM] == country or row[NOC] == country) and row[MEDAL] != 'NA':
                     year = row[YEAR]
                     if year not in country_medals[country]:
-                        country_medals[country][year] = 0
-                    country_medals[country][year] += 1
+                        country_medals[country]['Years'][year] = 0
+                    country_medals[country]['Years'][year] += 1
+
     for country in countries:
         if country in country_medals[country]:
-            best_year = max(country_medals[country], key=country_medals[country].get())
+            best_year = max(country_medals[country], key=country_medals[country]['Years'].get())
             print(f"The best year for {country} was {best_year} when {country} "
                   f"won {country_medals[country][best_year]} medals")
 
 
 parser = argparse.ArgumentParser(description="Olympic medals")
-parser.add_argument("-medals", nargs=2, required=True, help="Country of team and year of Olympics")
-parser.add_argument("-output", help = "Name of file where summary will be saved")
 
+parser.add_argument("-medals", nargs=2, help="Country of team and year of Olympics")
+parser.add_argument("-output", help = "Name of file where summary will be saved")
+parser.add_argument("-overall", nargs ="+", help = "Write all of countries that you want to check" )
 
 
 args = parser.parse_args()
+file = "athlete_events.tsv"
 
-team, year = args.medals
-output_file = args.output
+if args.medals:
+    team, year = args.medals
+    output_file = args.output
+    medals(team, year, output_file)
+elif args.overall:
+    countries = args.overall
+    overall(file, countries)
 
-medals(team, year, output_file)

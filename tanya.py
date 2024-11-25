@@ -7,6 +7,11 @@ def write_output(output_file, summary):
 def medals(team, year, output_file=None):
     medals_list = {'Gold': 0, 'Silver': 0, 'Bronze': 0}
     file = "athlete_events.tsv"
+
+    found_team = False
+    found_year = False
+    found_medals = False
+
     with open(file, "r", encoding='UTF-8') as file:
         header = file.readline().rstrip('\n').split('\t')
         YEAR = header.index("Year")
@@ -19,7 +24,13 @@ def medals(team, year, output_file=None):
         counter=0
         for line in file:
             row = line.rstrip('\n').split('\t')
+            if (row[TEAM] == team or row[NOC] == team):
+                found_team = True
+            if row[YEAR]==year:
+                found_year = True
+
             if (row[TEAM]==team or row[NOC]==team) and row[YEAR]==year and row[MEDAL] != "NA":
+                found_medals = True
                 name, event, medal = row[NAME], row[EVENT], row[MEDAL]
                 medals_list[medal] +=1
 
@@ -29,13 +40,19 @@ def medals(team, year, output_file=None):
 
                 if output_file and counter <=10:
                     write_output(output_file, f"{name}; {event}: {medal}\n")
-
-        summary =(
-            f"Gold: {medals_list['Gold']}\n"
-            f"Silver: {medals_list['Silver']}\n"
-            f"Bronze: {medals_list['Bronze']}\n"
-        )
-        print(summary)
+        if not found_team:
+            print(f"!!ERROR. WE CAN NOT FOUND {team}!!")
+        elif not found_year:
+            print(f"!!THERE WERE NO OLYMPICS IN {year}!!")
+        elif not found_medals:
+            print(f"!!NO MEDALS FOR THE {team} in {year} FOUND!!")
+        else:
+            summary =(
+                f"Gold: {medals_list['Gold']}\n"
+                f"Silver: {medals_list['Silver']}\n"
+                f"Bronze: {medals_list['Bronze']}\n"
+            )
+            print(summary)
 
         if output_file:
             write_output(output_file, summary)

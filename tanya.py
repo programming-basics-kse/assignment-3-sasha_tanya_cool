@@ -70,32 +70,40 @@ def overall(file, countries):
             row = line.rstrip('\n').split('\t')
             for country in countries:
                 if (row[TEAM] == country or row[NOC] == country) and row[MEDAL] != 'NA':
+                    medal = row[MEDAL]
                     year = row[YEAR]
-                    if year not in country_medals[country]:
-                        country_medals[country]['Years'][year] = 0
-                    country_medals[country]['Years'][year] += 1
+                    country_medals[country][medal] += 1
+
+                    if year not in country_medals[country]["Years"]:
+                        country_medals[country]["Years"][year] = 0
+                    country_medals[country]["Years"][year] += 1
 
     for country in countries:
-        if country in country_medals[country]:
-            best_year = max(country_medals[country], key=country_medals[country]['Years'].get())
-            print(f"The best year for {country} was {best_year} when {country} "
-                  f"won {country_medals[country][best_year]} medals")
+        if country_medals[country]["Years"]:
+            best_year = max(country_medals[country]["Years"], key=country_medals[country]["Years"].get)
+            total_medals = sum(country_medals[country]["Years"].values())
+            print(f"The best year for {country} was {best_year} when {country} won {country_medals[country]["Years"][best_year]} medals")
+            print(
+                f"Total medals for {country}: {total_medals} (Gold: {country_medals[country]['Gold']}, Silver: {country_medals[country]['Silver']}, Bronze: {country_medals[country]['Bronze']})\n"
+            )
+        else:
+            print(f"No medals found for {country}")
 
 
 parser = argparse.ArgumentParser(description="Olympic medals")
 
 parser.add_argument("-medals", nargs=2, help="Country of team and year of Olympics")
 parser.add_argument("-output", help = "Name of file where summary will be saved")
-parser.add_argument("-overall", nargs ="+", help = "Write all of countries that you want to check" )
-
-
+parser.add_argument("-overall", nargs="+", help = "Write all of countries that you want to check" )
 args = parser.parse_args()
+
 file = "athlete_events.tsv"
 
 if args.medals:
     team, year = args.medals
     output_file = args.output
     medals(team, year, output_file)
+
 elif args.overall:
     countries = args.overall
     overall(file, countries)

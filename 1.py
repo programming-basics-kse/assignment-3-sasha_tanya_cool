@@ -1,8 +1,10 @@
+from builtins import print
+from builtins import open
 def total(year):
     file = "athlete_events.tsv"
     medals_by_country = {}
 
-    with open(file, "r", encoding='UTF-8') as file:
+    with open(file, "r") as file:
         header = file.readline().rstrip('\n').split('\t')
         YEAR = header.index("Year")
         TEAM = header.index("Team")

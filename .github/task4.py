@@ -27,3 +27,16 @@ def average_medals(data, country):
             total_medals[medal_type] += count
     average_medals = {medal_type: count / len(years) for medal_type, count in total_medals.items()}
     return average_medals
+def interactive_mode(data):
+    while True:
+        country = input("enter country (or 'exit'): ")
+        if country.lower() == 'exit':
+            break
+        best = find_best_year(data, country)
+        worst = find_worst_year(data, country)
+        avg_medals = average_medals(data, country)
+        print(f"the best year for {country}: {best}")
+        print(f"the worst year for {country}: {worst}")
+        print(f"average amount of medals: {avg_medals}")
+if args.interactive:
+        interactive_mode(data)

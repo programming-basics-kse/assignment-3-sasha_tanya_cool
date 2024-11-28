@@ -1,3 +1,4 @@
+
 def find_best_year(data, country):
     best_year = None
     max_medals = 0

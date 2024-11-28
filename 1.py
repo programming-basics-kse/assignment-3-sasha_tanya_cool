@@ -1,10 +1,12 @@
-from builtins import print
-from builtins import open
+import argparse
+from idlelib.iomenu import encoding
+
+
 def total(year):
     file = "athlete_events.tsv"
     medals_by_country = {}
 
-    with open(file, "r") as file:
+    with open(file, "r", encoding="utf-8") as file:
         header = file.readline().rstrip('\n').split('\t')
         YEAR = header.index("Year")
         TEAM = header.index("Team")
@@ -23,7 +25,16 @@ def total(year):
                     medals_by_country[country][medal] += 1
 
         if not found_year:
-            print(f"!!THERE WERE NO OLYMPICS IN {year}!!")
+            print(f"!!THERE WERE NO OLYMPICS IN {year}")
         else:
             for country, counts in medals_by_country.items():
-                print(f"{country} - Gold: {counts['Gold']}, Silver: {counts['Silver']}, Bronze: {counts['Bronze']}")
+                print(f"{country} - Gold: {counts['Gold']}, Silver: {counts['Silver']}, Bronze: {counts['Bronze']}"
+parser=argparse.ArgumentParser(description="Olympic medals,")
+parser.add_argument("-medals", nargs=2, help="Country of team and year of Olympics")
+parser.add_argument("-output", help = "Name of file where summary will be saved")
+parser.add_argument("-overall", nargs="+", help = "Write all of countries that you want to check" )
+parser.add_argument("-total", type=str, help="Year for total medal count")
+
+args = parser.parse_args()
+elif args.total:
+    total(args.total)

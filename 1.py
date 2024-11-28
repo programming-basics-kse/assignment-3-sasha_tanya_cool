@@ -36,5 +36,6 @@ parser.add_argument("-overall", nargs="+", help = "Write all of countries that y
 parser.add_argument("-total", type=str, help="Year for total medal count")
 
 args = parser.parse_args()
+
 elif args.total:
     total(args.total)

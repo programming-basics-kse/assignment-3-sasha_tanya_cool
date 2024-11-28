@@ -91,13 +91,14 @@ def overall(file, countries):
 
 
 parser = argparse.ArgumentParser(description="Olympic medals")
+file = "athlete_events.tsv"
+
 
 parser.add_argument("-medals", nargs=2, help="Country of team and year of Olympics")
 parser.add_argument("-output", help = "Name of file where summary will be saved")
 parser.add_argument("-overall", nargs="+", help = "Write all of countries that you want to check" )
 args = parser.parse_args()
 
-file = "athlete_events.tsv"
 
 if args.medals:
     team, year = args.medals

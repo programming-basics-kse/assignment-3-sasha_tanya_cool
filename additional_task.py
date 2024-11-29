@@ -1,6 +1,6 @@
 import argparse
 
-def top_players(file, top_n, gender, age_kategor=None, weight_kategor=None):
+def top_players(file, top_n, gender, age_kategor=None, weight_kategor=None, height_kategor=None):
     age_ranges = {
         "1":(18, 25),
         "2":(25, 35),

@@ -66,7 +66,7 @@ if args.top:
     gender = args.top[1]
     age_kategor = args.a
     weight_kategor = args.w
-    height_kategor = args.height  # Заміна args.h на args.height
+    height_kategor = args.height  
     top_players(file, top_n, gender, age_kategor, weight_kategor, height_kategor)
 
 

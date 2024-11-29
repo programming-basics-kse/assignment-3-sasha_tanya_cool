@@ -8,7 +8,7 @@
             weight = float(row[WEIGHT]) if row[WEIGHT].replace(".", "").isdigit() else None
             height = float(row[HEIGHT]) if row[HEIGHT].replace(".", "").isdigit() else None
 
-        if age_group and (age is None or not (age_ranges[age_group][0] <= age < age_ranges[age_group][1])):
+            if age_group and (age is None or not (age_ranges[age_group][0] <= age < age_ranges[age_group][1])):
             continue
 
         if weight_group and (weight is None or not (weight_ranges[weight_group][0] <= weight < weight_ranges[weight_group][1])):

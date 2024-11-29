@@ -58,6 +58,9 @@ def top_players(file, top_n, gender, age_kategor=None, weight_kategor=None, heig
 
     top_players = sorted(players.items(), key=lambda x: x[1], reverse=True)[:top_n]
 
+    for name, score in top_players:
+        print(f"{name}: {score} points")
+
 parser = argparse.ArgumentParser(description="Olympic medals")
 
 parser.add_argument("-top", nargs=2, help="Find top players by criteria")
@@ -67,6 +70,7 @@ parser.add_argument("-height", help="Height group (1-4)")
 
 args = parser.parse_args()
 file = "athlete_events.tsv"
+
 if args.top:
     top_n = int(args.top[0])
     gender = args.top[1]

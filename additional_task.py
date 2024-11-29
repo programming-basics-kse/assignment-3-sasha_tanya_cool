@@ -32,4 +32,6 @@ def top_players(file, top_n, gender, age_kategor=None, weight_kategor=None):
         HEIGHT = header.index("Height")
         MEDAL = header.index("Medal")
 
+    top_players = sorted(players.items(), key=lambda  x: x[1], reverse=True)[:top_n]
+
 

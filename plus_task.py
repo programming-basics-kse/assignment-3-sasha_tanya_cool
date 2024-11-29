@@ -17,7 +17,7 @@
             if height_kategor and (height is None or not (height_ranges[height_kategor][0] <= height < height_ranges[height_kategor][1])):
                 continue
 
-        if row[MEDAL] != "NA":
+    if row[MEDAL] != "NA":
             medal_score = {"Gold": 5, "Silver": 3, "Bronze": 1}[row[MEDAL]]
             players[row[NAME]] = players.get(row[NAME], 0) + medal_score
 parser.add_argument("-top", nargs=2, help="Find top players by criteria")

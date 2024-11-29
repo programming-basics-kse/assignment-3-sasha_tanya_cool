@@ -56,9 +56,10 @@ def medals(team, year, output_file=None):
 
         if output_file:
             write_output(output_file, summary)
-            
+
 parser = argparse.ArgumentParser(description="Olympic medals")
 file = "athlete_events.tsv"
+
 
 parser.add_argument("-medals", nargs=2, help="Country of team and year of Olympics")
 args = parser.parse_args()

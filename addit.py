@@ -21,3 +21,22 @@ def top_players(file, top_n, gender, age_kategor=None, weight_kategor=None, heig
         "4": (200, float("inf")),
     }
 
+    players ={}
+
+    with open(file, "r", encoding='UTF-8') as file:
+        header = file.readline().rstrip('\n').split('\t')
+        NAME = header.index("Name")
+        SEX = header.index("Sex")
+        AGE = header.index("Age")
+        WEIGHT = header.index("Weight")
+        HEIGHT = header.index("Height")
+        MEDAL = header.index("Medal")
+
+
+    top_players = sorted(players.items(), key=lambda x: x[1], reverse=True)[:top_n]
+
+
+args = parser.parse_args()
+file = "athlete_events.tsv"
+
+
